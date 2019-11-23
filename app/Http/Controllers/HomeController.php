@@ -22,9 +22,19 @@ class HomeController extends Controller
      *
      * @return \Illuminate\Contracts\Support\Renderable
      */
-    public function index()
+    public function indexCategory()
     {
         $categories = Category::all();
-        return view('home', ['categories' => $categories]);
+        return view('category', ['categories' => $categories]);
+    }
+    public function indexBooks()
+    {
+        $categories = Category::all();
+        return view('books', ['categories' => $categories]);
+    }
+    public function indexStores()
+    {
+        $categories = Category::all();
+        return  view("store", compact("categories"));
     }
 }

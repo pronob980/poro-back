@@ -43,6 +43,11 @@
 
                     <!-- Right Side Of Navbar -->
                     <ul class="navbar-nav ml-auto">
+                        @auth
+                        <a href="{{ url('/stores') }}">Stores</a>
+                        <a href="{{ url('/categories') }}">Category</a>
+                        <a href="{{ url('/books') }}">Books</a>
+                        @endauth
                         <!-- Authentication Links -->
                         @guest
                         <li class="nav-item">

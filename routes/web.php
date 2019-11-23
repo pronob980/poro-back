@@ -17,12 +17,14 @@ Route::get('/', function () {
 
 Auth::routes();
 
-Route::get('/home', 'HomeController@index')->name('home');
-
-Auth::routes();
-
-Route::get('/home', 'HomeController@index')->name('home');
+Route::get('/books', 'HomeController@indexBooks')->name('books');
+Route::get('/categories', 'HomeController@indexCategory')->name('category');
+Route::get('/stores', 'HomeController@indexStores')->name('stores');
 
 
 Route::post('/books/create', "BookController@createBook");
 Route::post('/categories/create', "CategoryController@createCategory");
+
+
+Route::get('/store', "StoreController@index")->name("store.addBooks");
+Route::post('/store', "StoreController@create");

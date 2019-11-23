@@ -52,34 +52,6 @@
                         <button type="submit" class="btn btn-primary">Submit</button>
                     </form>
 
-
-                    <hr>
-
-                    <h1>create category</h1>
-
-                    <form method="post" action="/categories/create" enctype="multipart/form-data">
-                        @csrf
-                        <div class="form-group">
-                            <label>Category Title</label>
-                            <input type="text" class="form-control" name="title" placeholder="Enter book title">
-                        </div>
-
-                        <div class="form-group">
-                            <label>Category Description</label>
-                            <input type="text" class="form-control" name="description" placeholder="Enter book description">
-                        </div>
-
-                        <div class="form-group">
-                            <label>Thumbnail</label>
-                            <input type="file" class="form-control" name="thumbnail" placeholder="thumbnail">
-                        </div>
-
-                        <button type="submit" class="btn btn-primary">Submit</button>
-                    </form>
-
-
-
-
                 </div>
             </div>
         </div>
