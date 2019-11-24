@@ -19,13 +19,14 @@ Route::post('register', 'PassportController@register');
 
 
 Route::get('/books', "BookController@getBooks");
-Route::get('/books/category/{cat_id}', "BookController@getBooksByCategory");
 Route::get('/books/categories', "CategoryController@categories");
+Route::get('/books/{book_id}', "BookController@getBook");
+Route::get('/books/category/{cat_id}', "BookController@getBooksByCategory");
 
 
 
-Route::get('/books/bookmarked/{user_id}', "BookMarkedController@getAllBookmarked");
-Route::post('/books/bookmarked', "BookMarkedController@postBookMarked");
+Route::get('/books/bookmarked/{user_id}', "BookmarkController@getAllBookmarks");
+Route::post('/books/bookmarked', "BookmarkController@postBookmark");
 
-Route::get('/books/review/{user_id}', "BookReviewedController@getAllBookmarked");
+Route::get('/books/review/{user_id}', "BookReviewedController@getAllBookmarks");
 Route::post('/books/review', "BookReviewedController@postReview");

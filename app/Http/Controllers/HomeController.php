@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Book;
 use Illuminate\Http\Request;
 use App\Models\Category;
 
@@ -25,16 +26,17 @@ class HomeController extends Controller
     public function indexCategory()
     {
         $categories = Category::all();
-        return view('category', ['categories' => $categories]);
+        return view('category')->with("categories", $categories);
     }
     public function indexBooks()
     {
         $categories = Category::all();
-        return view('books', ['categories' => $categories]);
+        $books = Book::all();
+        return view('books')->with("books", $books)->with("categories", $categories);
     }
     public function indexStores()
     {
-        $categories = Category::all();
-        return  view("store", compact("categories"));
+        $stores = Category::all();
+        return view('store')->with("stores", $stores);
     }
 }

@@ -18,8 +18,9 @@ class CreateBooksTable extends Migration
             $table->integer('cat_id')->unsigned()->nullable();
             $table->string('title');
             $table->longText('description');
+            $table->longText('author');
             $table->longText('url');
-            $table->integer('thumbnail_id');
+            $table->longText('thumbnail');
             $table->timestamps();
         });
     }

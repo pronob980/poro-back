@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateBookmarkedTable extends Migration
+class CreateBookmarksTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,7 +13,7 @@ class CreateBookmarkedTable extends Migration
      */
     public function up()
     {
-        Schema::create('bookmarked', function (Blueprint $table) {
+        Schema::create('bookmarks', function (Blueprint $table) {
             $table->increments('id');
             $table->integer('user_id')->unsigned();
             $table->integer('book_id')->unsigned();
@@ -29,6 +29,6 @@ class CreateBookmarkedTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('bookmarked');
+        Schema::dropIfExists('bookmarks');
     }
 }

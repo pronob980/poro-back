@@ -9,12 +9,17 @@ class BookController extends Controller
 {
     public function getBooks(Request $request)
     {
-        return Book::paginate();
+        return Book::get();
+    }
+
+    public function getBook($book_id, Request $request)
+    {
+        return Book::where("id", $book_id)->first();
     }
 
     public function getBooksByCategory($cat_id, Request $request)
     {
-        return Book::where("cat_id", $cat_id)->paginate();
+        return Book::where("cat_id", $cat_id)->get();
     }
 
     public function createBook(Request $request)
@@ -22,7 +27,7 @@ class BookController extends Controller
 
         request()->validate([
             'pdf'  => 'required|mimes:pdf|max:2048',
-            'thumbnail'  => 'mimes:png,jpg,jpeg|max:2048',
+            'thumbnail'  => 'required|mimes:png,jpg,jpeg|max:2048'
         ]);
 
         // dd($request->all());
@@ -35,26 +40,35 @@ class BookController extends Controller
         }
 
         $thumbnailName = null;
-        if ($files = $request->file('thumbnail')) {
-            $destinationPath = 'thumbnails'; // upload path
-            $pdfFile = date('YmdHis') . "." . $files->getClientOriginalExtension();
-            $files->move($destinationPath, $pdfFile);
-            $fileName = "$pdfFile";
+        if ($img = $request->file('thumbnail')) {
+            $imgdestination = 'thumbnails'; // upload path
+            $imgfile = date('YmdHis') . "." . $img->getClientOriginalExtension();
+            $img->move($imgdestination, $imgfile);
+            $thumbnailName = "$imgfile";
         }
 
         $book = Book::create([
             "cat_id" => $request->cat_id,
             "title" => $request->title,
             "description" => $request->description,
+            "author" => $request->author,
             "url" => $fileName,
-            "thumbnail_id" => $thumbnailName
+            "thumbnail" => $thumbnailName
         ]);
 
-        return $book;
+        // dd($book);
+
+        // return $book;
 
         if ($fileName) {
             $book->save();
-            return view('home')->with($book);
+            return view('books')->with($book);
         }
+    }
+
+    public function deleteBook($book_id, Request $request)
+    {
+        $book = Category::where('id', $book_id)->delete();
+        return redirect()->back()->with("book", $book)->with("status", 'Successfully deleted!');
     }
 }

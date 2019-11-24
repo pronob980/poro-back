@@ -7,11 +7,13 @@ use Illuminate\Http\Request;
 
 class BookReviewedController extends Controller
 {
-    public function getAllBookmarked($user_id, Request $request) {
+    public function getAllBookmarks($user_id, Request $request)
+    {
         return ReviewBook::where("user_id", $user_id)->with("book_details")->get();
     }
 
-    public function postReview(Request $request) {
+    public function postReview(Request $request)
+    {
         $book_id = $request->book_id;
         $user_id = $request->user_id;
         $value = $request->value;
