@@ -36,7 +36,8 @@ class HomeController extends Controller
     }
     public function indexStores()
     {
+        $categories = Category::all();
         $stores = Category::all();
-        return view('store')->with("stores", $stores);
+        return view('store')->with("stores", $stores)->with("categories", $categories);
     }
 }
