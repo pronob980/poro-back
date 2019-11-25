@@ -68,7 +68,7 @@ class BookController extends Controller
 
     public function deleteBook($book_id, Request $request)
     {
-        $book = Category::where('id', $book_id)->delete();
+        $book = Book::where('id', $book_id)->delete();
         return redirect()->back()->with("book", $book)->with("status", 'Successfully deleted!');
     }
 }

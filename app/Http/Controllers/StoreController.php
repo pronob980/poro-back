@@ -8,91 +8,60 @@ use Illuminate\Http\Request;
 
 class StoreController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function index(Request $request)
+    public function getBooks(Request $request)
     {
-        $categories = Category::all();
-        return  view("store", compact("categories"));
+        return Store::get();
     }
 
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create(Request $request)
+    public function getBook($book_id, Request $request)
     {
-        $request->validate([
-            'title' => 'required',
-            'cat_id' => 'required',
-            'description' => 'required',
-            'url' => 'required',
-            'review' => 'required',
-            'thumbnail_url' => 'required',
+        return Store::where("id", $book_id)->first();
+    }
+
+    public function getBooksByCategory($cat_id, Request $request)
+    {
+        return Store::where("cat_id", $cat_id)->get();
+    }
+
+    public function createBook(Request $request)
+    {
+
+        request()->validate([
+            'thumbnail'  => 'mimes:png,jpg,jpeg|max:2048'
         ]);
 
-        Store::create($request->all());
+        // dd($request->all());
 
-        return redirect()->back();
+        $thumbnailName = null;
+        if ($img = $request->file('thumbnail')) {
+            $imgdestination = 'thumbnails'; // upload path
+            $imgfile = date('YmdHis') . "." . $img->getClientOriginalExtension();
+            $img->move($imgdestination, $imgfile);
+            $thumbnailName = "$imgfile";
+        }
+
+        $book = Store::create([
+            "cat_id" => $request->cat_id,
+            "title" => $request->title,
+            "description" => $request->description,
+            "author" => $request->author,
+            "thumbnail" => $thumbnailName,
+            "price" => $request->price,
+            "contact" => $request->contact,
+        ]);
+
+        // dd($book);
+
+        // return $book;
+
+
+        $book->save();
+        return response($book);
     }
 
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
-    public function store(Request $request)
+    public function deleteBook($book_id, Request $request)
     {
-        //
-    }
-
-    /**
-     * Display the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function show($id)
-    {
-        //
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function edit($id)
-    {
-        //
-    }
-
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function update(Request $request, $id)
-    {
-        //
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function destroy($id)
-    {
-        //
+        $book = Book::where('id', $book_id)->delete();
+        return redirect()->back()->with("book", $book)->with("status", 'Successfully deleted!');
     }
 }

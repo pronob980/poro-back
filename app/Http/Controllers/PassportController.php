@@ -28,8 +28,8 @@ class PassportController extends Controller
         ]);
 
         $token = $user->createToken('sufibhai')->accessToken;
-
-        return response()->json(['token' => $token], 200);
+        $user->token = $token;
+        return response()->json(['user' => $user], 200);
     }
 
     /**
@@ -46,11 +46,21 @@ class PassportController extends Controller
         ];
 
         if (auth()->attempt($credentials)) {
-            $token = auth()->user()->createToken('sufibhai')->accessToken;
-            return response()->json(['token' => $token], 200);
+            $user = auth()->user();
+            $token = $user->createToken('sufibhai')->accessToken;
+
+            $user->token = $token;
+            return response()->json(['user' => $user], 200);
         } else {
             return response()->json(['error' => 'Wrong credentials'], 401);
         }
+    }
+
+    public function returnUser(Request $request)
+    {
+        $user = $request->user();
+        $user->token = $request->bearerToken();
+        return response()->json(['user' => $user], 200);
     }
 
     /**

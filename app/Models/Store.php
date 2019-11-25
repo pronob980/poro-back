@@ -18,8 +18,9 @@ class Store extends Model
         'title',
         'cat_id',
         'description',
-        'review',
-        'url',
-        'thumbnail_url',
+        'thumbnail',
+        'author',
+        'price',
+        'contact',
     ];
 }

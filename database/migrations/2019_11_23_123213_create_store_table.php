@@ -18,9 +18,10 @@ class CreateStoreTable extends Migration
             $table->integer('cat_id')->unsigned()->nullable();
             $table->string('title');
             $table->longText('description');
-            $table->longText('review');
-            $table->longText('url');
-            $table->longText('thumbnail_url');
+            $table->longText('price');
+            $table->longText('contact');
+            $table->longText('author')->nullable();
+            $table->longText('thumbnail');
             $table->timestamps();
         });
     }

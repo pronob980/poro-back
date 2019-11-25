@@ -17,11 +17,19 @@ use Illuminate\Http\Request;
 Route::post('login', 'PassportController@login');
 Route::post('register', 'PassportController@register');
 
+Route::get('user', 'PassportController@returnUser')->middleware('auth:api');
+
 
 Route::get('/books', "BookController@getBooks");
 Route::get('/books/categories', "CategoryController@categories");
 Route::get('/books/{book_id}', "BookController@getBook");
 Route::get('/books/category/{cat_id}', "BookController@getBooksByCategory");
+
+Route::get('/stores', "StoreController@getBooks");
+Route::post('/stores', "StoreController@createBook");
+// Route::get('/books/categories', "CategoryController@categories");
+// Route::get('/books/{book_id}', "BookController@getBook");
+// Route::get('/books/category/{cat_id}', "BookController@getBooksByCategory");
 
 
 
