@@ -14,10 +14,10 @@ use Illuminate\Http\Request;
 */
 
 
+Route::get('user', 'PassportController@returnUser')->middleware('auth:api');
+
 Route::post('login', 'PassportController@login');
 Route::post('register', 'PassportController@register');
-
-Route::get('user', 'PassportController@returnUser')->middleware('auth:api');
 
 
 Route::get('/books', "BookController@getBooks");

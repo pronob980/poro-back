@@ -40,6 +40,11 @@ class PassportController extends Controller
      */
     public function login(Request $request)
     {
+        $this->validate($request, [
+            'email' => 'required',
+            'password' => 'required',
+        ]);
+
         $credentials = [
             'email' => $request->email,
             'password' => $request->password
@@ -51,8 +56,10 @@ class PassportController extends Controller
 
             $user->token = $token;
             return response()->json(['user' => $user], 200);
+
+            // dd($user);
         } else {
-            return response()->json(['error' => 'Wrong credentials'], 401);
+            // return response()->json(['error' => 'Wrong credentials'], 401);
         }
     }
 
